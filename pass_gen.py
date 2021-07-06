@@ -7,7 +7,9 @@ import tkinter as Tk
 window = Tk.Tk()
 window.title('Генератор паролей')
 window.geometry('1000x300')
-background_image = Tk.PhotoImage(file = "bg_image.png")  #drop your .png files in directory  size 1000*300
+window.resizable(width=False, height=False)
+window.iconbitmap('icon.ico')
+background_image = Tk.PhotoImage(file = "bg_image.png")  #drop your .png files in directory
 background_label = Tk.Label(window, image=background_image)
 background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
@@ -53,9 +55,14 @@ def gen_passwords(numbint):
   			password.append(i)
   			clean_psw = (''.join(password))
 		print('rad_digletters')
-	messagebox.showinfo('Ваш пароль',clean_psw)
+	try:
+		messagebox.showinfo('Ваш пароль',clean_psw)
+	except UnboundLocalError:
+		messagebox.showinfo('Ошибка','Пожалуйста, выберите набор символов')
 	save_completed_pass(clean_psw)
 	copy_pass(clean_psw)
+def quit_pass_gen():
+	window.quit()
 
 selected = IntVar()
 rad_full = Radiobutton(window,text ='Полный набор(Aa-Zz, 1-9, !@...)',value = 1, variable = selected)
@@ -70,6 +77,8 @@ num_sym = Entry(window, width = 30, bg = 'lightblue')
 num_sym.grid(column = 1, row = 0)
 get_entry = Button(window, width = 20, text = 'Сгенерировать',font = ("Arial Bold",20),command = get_numb,bg = 'lightblue')
 get_entry.grid(column = 1, row = 3)
+quit_button = Button(window, width = 5, text = 'Выйти', font = ('Arial Bold', 10), command = quit_pass_gen, bg = 'red')
+quit_button.place (x=1, y=270)
 
 
 
